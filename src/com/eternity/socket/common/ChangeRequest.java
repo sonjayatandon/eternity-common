@@ -1,0 +1,47 @@
+package com.eternity.socket.common;
+
+/*
+The MIT License (MIT)
+
+Copyright (c) 2011 Sonjaya Tandon
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. * 
+ */
+
+import java.nio.channels.SocketChannel;
+
+public class ChangeRequest {
+	public static final int REGISTER = 1;
+	public static final int CHANGEOPS = 2;
+
+	public SocketChannel socket;
+	public int type;
+	public int ops;
+
+	public ChangeRequest(SocketChannel socket, int type, int ops) {
+		this.socket = socket;
+		this.type = type;
+		this.ops = ops;
+	}
+
+	@Override
+	public String toString() {
+		return "ChangeRequest [socket=" + socket + ", type=" + type + ", ops=" + ops + "]";
+	}
+}
