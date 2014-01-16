@@ -7,8 +7,7 @@ public class HelloWorld extends Command {
 
 	@Override
 	public void execute(ReferenceRequest request, Response response) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Hello, world!");
 	}
 
 
