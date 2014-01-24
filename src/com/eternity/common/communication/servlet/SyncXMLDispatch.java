@@ -70,7 +70,7 @@ public abstract class SyncXMLDispatch extends HttpServlet implements MessageCons
 		PrintWriter writer = response.getWriter();
 		try {
 			String subsystemId = request.getParameter(Parameter.subsystemId.toString());
-			String JSON = request.getParameter(Parameter.JSON.toString());
+			String JSON = request.getParameter(Parameter.jsonMessage.toString());
 
 			SubSystemNames subsystem = MessageConsumer.getSubSystem(subsystemId);
 			if (subsystem != null) {

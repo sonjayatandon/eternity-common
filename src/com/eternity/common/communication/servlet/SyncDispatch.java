@@ -73,7 +73,7 @@ public abstract class SyncDispatch extends HttpServlet implements MessageConsume
 		PrintWriter writer = response.getWriter();
 		try {
 			String subsystemId = request.getParameter(Parameter.subsystemId.toString());
-			String JSON = request.getParameter(Parameter.JSON.toString());
+			String JSON = request.getParameter(Parameter.jsonMessage.toString());
 			String postData = (String) request.getAttribute(POST_DATA);
 
 			SubSystemNames subsystem = MessageConsumer.getSubSystem(subsystemId);

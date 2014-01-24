@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 
 public enum Parameter implements ParameterNames {
 	subsystemId,
-	JSON,
+	jsonMessage,
 	postData;
 
 	private static Logger log = Logger.getLogger(Parameter.class);
