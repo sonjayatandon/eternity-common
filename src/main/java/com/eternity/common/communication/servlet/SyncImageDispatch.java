@@ -74,7 +74,7 @@ public abstract class SyncImageDispatch extends HttpServlet implements MessageCo
 	    OutputStream out = response.getOutputStream();
 		try {
 			String subsystemId = request.getParameter(Parameter.subsystemId.toString());
-			String JSON = request.getParameter(Parameter.JSON.toString());
+			String JSON = request.getParameter(Parameter.jsonMessage.toString());
 
 			SubSystemNames subsystem = MessageConsumer.getSubSystem(subsystemId);
 

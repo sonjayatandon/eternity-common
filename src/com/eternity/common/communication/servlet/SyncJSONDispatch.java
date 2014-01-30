@@ -25,6 +25,7 @@ SOFTWARE. *
  */
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -40,18 +41,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.eternity.common.SubSystemNames;
-import com.eternity.common.communication.AsyncThreadPool;
 import com.eternity.common.message.MessageConsumer;
 import com.eternity.common.message.MessageConsumerFactory;
 import com.eternity.common.message.Parameter;
+import com.eternity.common.message.Response;
 
-public abstract class AsyncDispatch extends HttpServlet implements
-		MessageConsumerFactory {
+public abstract class SyncJSONDispatch extends HttpServlet implements MessageConsumerFactory {
 	private static final long serialVersionUID = 42L;
-	private static Logger log = Logger.getLogger(AsyncDispatch.class);
+	private static Logger log = Logger.getLogger(SyncJSONDispatch.class);
 	private String hostName;
 
-	public AsyncDispatch() {
+	private static final String POST_DATA = "postData";
+
+	public SyncJSONDispatch() {
 		super();
 	}
 
@@ -66,36 +68,53 @@ public abstract class AsyncDispatch extends HttpServlet implements
 		}
 	}
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Date date = new Date();
 		PrintWriter writer = response.getWriter();
 		try {
-			String subsystemId = request.getParameter(Parameter.subsystemId.toString());
-			String JSON = request.getParameter(Parameter.jsonMessage.toString());
+			
+			StringBuffer requestURL = request.getRequestURL();
+			
+	
+			
+			String subsystemId = requestURL.toString().replaceFirst(".*/([^/?]+).*", "$1");
+			String jsonMessage = request.getParameter(Parameter.jsonMessage.toString());
+			String postData = (String) request.getAttribute(POST_DATA);
 
 			SubSystemNames subsystem = MessageConsumer.getSubSystem(subsystemId);
-			
+
 			if (subsystem != null) {
 				MessageConsumer consumer = MessageConsumer.getInstance(subsystem, this, hostName);
-				// fire and forget
-				AsyncThreadPool.instance.execute(consumer, JSON);
-				// always says ok
-				writer.println("ok");
+				Response consumerResponse;
+				if (postData != null) {
+					consumerResponse = consumer.processMessage(jsonMessage, postData);
+				} else {
+					consumerResponse = consumer.processMessage(jsonMessage);
+				}
+				String result = consumerResponse.getJSONResponseData();
+				writer.println(result);
 			} else {
-				String error = "invalid gameId specified [" + subsystemId + "]";
+				String error = "invalid subsystemId specified [" + subsystemId + "]";
 				writer.println(error);
 				log.error(error);
 			}
 		} finally {
 			writer.close();
-			log.debug("AsynchDispatch completed in : "
-					+ (new Date().getTime() - date.getTime()) + "ms");
+			log.debug("SynchDispatch completed in : " + (new Date().getTime() - date.getTime()) + "ms");
 		}
 	}
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		BufferedReader reader = request.getReader();
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			sb.append(line + "\n");
+		}
+		reader.close();
+		String postData = sb.toString();
+		log.debug("post data = [" + postData + "]");
+		request.setAttribute(POST_DATA, postData);
 		doGet(request, response);
 	}
 }

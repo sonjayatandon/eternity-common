@@ -55,6 +55,10 @@ public abstract class MessageConsumer {
 		return subsystemNames.getSubSystem(subSystemId);
 	}
 	
+	public static final void setSubSystemNames(SubSystemNames subsystemNames) {
+		MessageConsumer.subsystemNames = subsystemNames;
+	}
+	
 	public static final MessageConsumer lookup(SubSystemNames subsystem) {
 		return instances.get(subsystem);
 	}
