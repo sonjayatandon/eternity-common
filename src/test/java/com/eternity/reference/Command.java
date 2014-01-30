@@ -8,7 +8,7 @@ import com.eternity.common.message.Response;
 
 public abstract class Command implements com.eternity.common.message.Command {
 	private static Logger log = Logger.getLogger(Command.class);
-
+	
 	@Override
 	public void execute(Request request, Response response) {
 		try {
@@ -17,15 +17,13 @@ public abstract class Command implements com.eternity.common.message.Command {
 		} catch (ClassCastException e) {
 			log.error("", e);
 		}
-
+		
 	}
-
+	
 	public boolean executeAlways(){
 		return false;
 	}
 	
 	public abstract void execute(ReferenceRequest request, Response response);
 
-	
-	
 }
