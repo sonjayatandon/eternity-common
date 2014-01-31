@@ -32,12 +32,13 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.socket.common.Constants;
 
 public class Client {
-	private static Logger log = Logger.getLogger(Client.class);
+	private static Logger log = LogManager.getLogger(Client.class);
 
 	private ClientSelectorThread selectorThread;
 

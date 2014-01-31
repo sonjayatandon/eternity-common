@@ -1,6 +1,10 @@
 package com.eternity.common.test;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 import com.eternity.common.SubSystemNames;
 import com.eternity.common.message.MessageConsumer;
@@ -13,14 +17,16 @@ import com.google.gson.Gson;
 
 
 public class TestWorkbench implements MessageConsumerFactory {
-
+	private static Logger log = LogManager.getLogger(TestWorkbench.class);
+	
 	@Test
 	public void testMessageConsumer() {
 		MessageConsumer mc = MessageConsumer.getInstance(TestSubSystems.alpha, this, "");
 		mc.setReady(true);
 		String message = "{\"commandName\":\"HelloWorld\",\"paramMap\": {\"first\":\"1234\",\"second\":\"1\",\"third\":\"12\"}}";
+		log.info(message);
 		Response response = mc.processMessage(message);
-		assert (response.status == Response.OK);	
+		assertEquals(response.status, Response.OK);
 	}
 
 	@Override

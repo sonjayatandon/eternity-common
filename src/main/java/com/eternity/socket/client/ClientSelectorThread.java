@@ -40,14 +40,15 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.socket.common.ChangeRequest;
 import com.eternity.socket.common.Constants;
 import com.eternity.socket.common.SelectorThread;
 
 public class ClientSelectorThread extends SelectorThread implements Runnable {
-	private static Logger log = Logger.getLogger(ClientSelectorThread.class);
+	private static Logger log = LogManager.getLogger(ClientSelectorThread.class);
 
 	// who we're connecting to
 	private InetAddress hostAddress;

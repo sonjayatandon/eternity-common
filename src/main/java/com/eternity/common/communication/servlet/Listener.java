@@ -34,7 +34,8 @@ import javax.naming.NamingException;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.naming.NamingContext;
 
 import com.eternity.common.communication.CommonConsumerProcessor;
@@ -48,7 +49,7 @@ import com.eternity.socket.server.Server;
  * Starts and stops the socket server with servlet context 
  */
 public abstract class Listener implements ServletContextListener, MessageConsumerFactory {
-	protected static Logger log = Logger.getLogger(Listener.class);
+	protected static Logger log = LogManager.getLogger(Listener.class);
 	private String hostName;
 
 	@Override

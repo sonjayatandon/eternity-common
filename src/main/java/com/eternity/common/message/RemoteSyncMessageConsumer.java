@@ -28,14 +28,15 @@ SOFTWARE. *
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.common.SubSystemNames;
 import com.eternity.socket.client.Client;
 import com.google.gson.Gson;
 
 public class RemoteSyncMessageConsumer extends MessageConsumer {
-	private static Logger log = Logger.getLogger(RemoteSyncMessageConsumer.class);
+	private static Logger log = LogManager.getLogger(RemoteSyncMessageConsumer.class);
 
 	private String remoteServerAddress;
 	protected Gson gson;

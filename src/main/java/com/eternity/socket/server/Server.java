@@ -27,13 +27,14 @@ SOFTWARE. *
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.socket.common.Constants;
 import com.eternity.socket.common.WorkerPool;
 
 public class Server {
-	private static Logger log = Logger.getLogger(Server.class);
+	private static Logger log = LogManager.getLogger(Server.class);
 
 	private static final int THREAD_POOL_SIZE = 5;
 	

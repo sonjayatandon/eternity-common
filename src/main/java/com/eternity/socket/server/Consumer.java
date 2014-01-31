@@ -26,10 +26,11 @@ SOFTWARE. *
 
 import java.util.concurrent.BlockingQueue;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class Consumer implements Runnable {
-	private static Logger log = Logger.getLogger(Consumer.class);
+	private static Logger log = LogManager.getLogger(Consumer.class);
 
 	private BlockingQueue<DataEvent> queue;
 	// for responding to an event

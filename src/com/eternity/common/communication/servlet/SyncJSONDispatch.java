@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import com.eternity.common.SubSystemNames;
 import com.eternity.common.message.MessageConsumer;
@@ -48,7 +48,7 @@ import com.eternity.common.message.Response;
 
 public abstract class SyncJSONDispatch extends HttpServlet implements MessageConsumerFactory {
 	private static final long serialVersionUID = 42L;
-	private static Logger log = Logger.getLogger(SyncJSONDispatch.class);
+	private static Logger log = LogManager.getLogger(SyncJSONDispatch.class);
 	private String hostName;
 
 	private static final String POST_DATA = "postData";
