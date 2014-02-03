@@ -21,7 +21,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE. * 
+SOFTWARE. *
  */
 
 
@@ -29,14 +29,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eternity.common.SubSystemNames;
 import com.google.gson.Gson;
 
 public abstract class MessageConsumer {
-	
+
 	// /////////////////////////////////////////////////////////////////
 	// flyweight support fields and methods
 	// There will be an instance of a concrete version of this class/gameId
@@ -51,19 +51,19 @@ public abstract class MessageConsumer {
 		}
 		return instance;
 	}
-	
+
 	public static final SubSystemNames getSubSystem(String  subSystemId) {
 		return subsystemNames.getSubSystem(subSystemId);
 	}
-	
+
 	public static final void setSubSystemNames(SubSystemNames subsystemNames) {
 		MessageConsumer.subsystemNames = subsystemNames;
 	}
-	
+
 	public static final MessageConsumer lookup(SubSystemNames subsystem) {
 		return instances.get(subsystem);
 	}
-	
+
 	private static synchronized MessageConsumer createInstance(SubSystemNames subsystem, MessageConsumerFactory messageConsumerFactory, String hostName) {
 		MessageConsumer instance = instances.get(subsystem);
 		if (instance == null) {
@@ -77,7 +77,7 @@ public abstract class MessageConsumer {
 		}
 		return instance;
 	}
-	
+
 	// /////////////////////////////////////////////////////////////////
 	// Base message consumer fields and methods
 	protected Gson gson;
@@ -86,7 +86,7 @@ public abstract class MessageConsumer {
 	protected String hostName;
 	protected Map<MessageNames, Command> commandRegistry = new HashMap<MessageNames, Command>();
 	private boolean ready = false;
-	private static Logger log = LogManager.getLogger(MessageConsumer.class);
+	private static Logger log = LoggerFactory.getLogger(MessageConsumer.class);
 
 	protected MessageConsumer(SubSystemNames subsystem) {
 		this.subsystem = subsystem;
@@ -101,11 +101,11 @@ public abstract class MessageConsumer {
 	public boolean isReady(){
 		return ready;
 	}
-	
+
 	public void setReady(boolean ready){
 		this.ready = ready;
 	}
-	
+
 	public String getHostName() {
 		return hostName;
 	}
@@ -113,37 +113,37 @@ public abstract class MessageConsumer {
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
 	}
-	
+
 	public Gson getGson() {
 		return gson;
 	}
 
 	public Response processMessage(Message message) {
-		log.debug(message);
-		Response response = new Response(); 
+		log.debug(message.toString());
+		Response response = new Response();
 		Command command = commandRegistry.get(message.commandName);
-		
+
 		if (command == null) {
 			log.error("unknown command [" + message.commandName + "]");
 			response.setAsFailed();
 			return response;
 		}
-		
+
 		if(!command.executeAlways() && !ready){//if the server isn't completely started and the command isn't always executed
 			log.error("server has not finished starting, message will not be processed - " + this.subsystem);
 			response.setAsFailed();
 			return response;
-		}		
+		}
 		//The server has finished starting, or the command is one that's always executed
 
 		Request request = requestFactory.createRequest(message.paramMap);
 		request.postData = message.postData;
 		command.execute(request, response);
-		
+
 		// TODO check response.status
 		String JSON = gson.toJson(response.responseData);
 		response.setResponseData(ResponseField.JSON, JSON);
-		
+
 		return response;
 	}
 
@@ -151,18 +151,18 @@ public abstract class MessageConsumer {
 		Message message = gson.fromJson(messageJSON, Message.class);
 		return processMessage(message);
 	}
-	
+
 	// for handling post requests
 	public Response processMessage(String messageJSON, String postData) {
 		Message message = gson.fromJson(messageJSON, Message.class);
 		message.postData = postData;
 		return processMessage(message);
 	}
-	
+
 	public Response processMessages(ArrayList<Message> messages) {
 		StringBuffer responseString = new StringBuffer("[");
 		for (Message message: messages) {
-			Response response = processMessage(message); 
+			Response response = processMessage(message);
 			if (response != null) {
 				responseString.append(response.getJSONResponseData());
 				responseString.append(',');

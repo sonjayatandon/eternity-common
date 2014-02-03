@@ -37,8 +37,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eternity.common.SubSystemNames;
 import com.eternity.common.message.MessageConsumer;
@@ -48,7 +48,7 @@ import com.eternity.common.message.Response;
 
 public abstract class SyncXMLDispatch extends HttpServlet implements MessageConsumerFactory {
 	private static final long serialVersionUID = 42L;
-	private static Logger log = LogManager.getLogger(SyncDispatch.class);
+	private static Logger log = LoggerFactory.getLogger(SyncDispatch.class);
 	private String hostName;
 	
 	public SyncXMLDispatch() {

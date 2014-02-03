@@ -24,13 +24,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. * 
  */
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eternity.socket.common.Constants;
 
 public abstract class ConsumerProcessor {
-	protected static Logger log = LogManager.getLogger(ConsumerProcessor.class);
+	protected static Logger log = LoggerFactory.getLogger(ConsumerProcessor.class);
 	
 	protected static final String NO_RESPONSE = "";
 	

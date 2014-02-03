@@ -1,14 +1,14 @@
 package com.eternity.reference;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eternity.common.message.Request;
 import com.eternity.common.message.Response;
 
 
 public abstract class Command implements com.eternity.common.message.Command {
-	private static Logger log = LogManager.getLogger(Command.class);
+	private static Logger log = LoggerFactory.getLogger(Command.class);
 	
 	@Override
 	public void execute(Request request, Response response) {

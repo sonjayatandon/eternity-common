@@ -28,14 +28,14 @@ SOFTWARE. *
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eternity.common.message.MessageConsumer;
 import com.eternity.common.message.Response;
 
 public class AsyncThreadPool {
-	protected static Logger log = LogManager.getLogger(AsyncThreadPool.class);
+	protected static Logger log = LoggerFactory.getLogger(AsyncThreadPool.class);
 	private ExecutorService pool;
 
 	// singleton

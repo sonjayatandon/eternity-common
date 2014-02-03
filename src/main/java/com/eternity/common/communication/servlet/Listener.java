@@ -21,7 +21,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE. * 
+SOFTWARE. *
  */
 
 
@@ -34,8 +34,8 @@ import javax.naming.NamingException;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.naming.NamingContext;
 
 import com.eternity.common.communication.CommonConsumerProcessor;
@@ -46,10 +46,10 @@ import com.eternity.socket.server.Server;
 
 
 /*
- * Starts and stops the socket server with servlet context 
+ * Starts and stops the socket server with servlet context
  */
 public abstract class Listener implements ServletContextListener, MessageConsumerFactory {
-	protected static Logger log = LogManager.getLogger(Listener.class);
+	protected static Logger log = LoggerFactory.getLogger(Listener.class);
 	private String hostName;
 
 	@Override
@@ -57,7 +57,7 @@ public abstract class Listener implements ServletContextListener, MessageConsume
 		Server.instance.stopServer();
 		Client.stopAllClients();
 		WorkerPool.getInstance().shutdown();
-		
+
 		// TODO shut down attached registered services
 		// e.g. CloudRequestScheduler.getInstance().shutdown();
 	}
@@ -85,7 +85,7 @@ public abstract class Listener implements ServletContextListener, MessageConsume
 		try {
 			props.load(getClass().getResourceAsStream("/" + environment + ".properties"));
 			serverPort = Integer.parseInt(props.getProperty("server.port"));
-			log.debug(serverPort);
+			log.debug("Server Port: " + serverPort);
 		} catch (Exception e) {
 			log.error("unable to parse server.port", e);
 		}
@@ -96,9 +96,9 @@ public abstract class Listener implements ServletContextListener, MessageConsume
 		} catch (UnknownHostException e) {
 			log.error("", e);
 		}
-		
+
 		Server.instance.startServer(serverPort, new CommonConsumerProcessor(hostName, Listener.this));
-		
+
 	}
-	
+
 }
