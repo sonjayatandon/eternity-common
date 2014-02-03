@@ -29,7 +29,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.common.SubSystemNames;
 import com.google.gson.Gson;
@@ -85,7 +86,7 @@ public abstract class MessageConsumer {
 	protected String hostName;
 	protected Map<MessageNames, Command> commandRegistry = new HashMap<MessageNames, Command>();
 	private boolean ready = false;
-	private static Logger log = Logger.getLogger(MessageConsumer.class);
+	private static Logger log = LogManager.getLogger(MessageConsumer.class);
 
 	protected MessageConsumer(SubSystemNames subsystem) {
 		this.subsystem = subsystem;

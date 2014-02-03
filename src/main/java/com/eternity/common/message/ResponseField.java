@@ -24,14 +24,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. * 
  */
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public enum ResponseField implements ResponseFieldNames {
 	JSON,
 	xml,
 	image;
 	
-	private static Logger log = Logger.getLogger(Parameter.class);
+	private static Logger log = LogManager.getLogger(Parameter.class);
 
 	public static Parameter getValueOf(String parameter) {
 		Parameter retVal = null;

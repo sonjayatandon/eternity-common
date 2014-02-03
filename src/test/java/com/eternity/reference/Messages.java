@@ -1,5 +1,6 @@
 package com.eternity.reference;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.common.message.MessageNames;
 
@@ -7,7 +8,7 @@ import com.eternity.common.message.MessageNames;
 public enum Messages implements MessageNames {
 	HelloWorld;
 
-	private static Logger log = Logger.getLogger(Messages.class);
+	private static Logger log = LogManager.getLogger(Messages.class);
 
 	public static Messages getValueOf(String command) {
 		Messages retVal = null;

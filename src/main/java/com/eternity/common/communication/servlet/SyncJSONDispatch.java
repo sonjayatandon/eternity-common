@@ -21,7 +21,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE. * 
+SOFTWARE. *
  */
 
 
@@ -38,7 +38,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.common.SubSystemNames;
 import com.eternity.common.message.MessageConsumer;
@@ -48,7 +49,7 @@ import com.eternity.common.message.Response;
 
 public abstract class SyncJSONDispatch extends HttpServlet implements MessageConsumerFactory {
 	private static final long serialVersionUID = 42L;
-	private static Logger log = Logger.getLogger(SyncJSONDispatch.class);
+	private static Logger log = LogManager.getLogger(SyncJSONDispatch.class);
 	private String hostName;
 
 	private static final String POST_DATA = "postData";
@@ -72,11 +73,11 @@ public abstract class SyncJSONDispatch extends HttpServlet implements MessageCon
 		Date date = new Date();
 		PrintWriter writer = response.getWriter();
 		try {
-			
+
 			StringBuffer requestURL = request.getRequestURL();
-			
-	
-			
+
+
+
 			String subsystemId = requestURL.toString().replaceFirst(".*/([^/?]+).*", "$1");
 			String jsonMessage = request.getParameter(Parameter.jsonMessage.toString());
 			String postData = (String) request.getAttribute(POST_DATA);

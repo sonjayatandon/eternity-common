@@ -25,12 +25,12 @@ SOFTWARE. *
  */
 
 
-import com.google.gson.Gson;
 import com.eternity.common.message.MessageConsumer;
 import com.eternity.common.message.MessageConsumerFactory;
 import com.eternity.common.message.Response;
 import com.eternity.common.message.SubSystemMessage;
 import com.eternity.socket.server.ConsumerProcessor;
+import com.google.gson.Gson;
 
 public class CommonConsumerProcessor extends ConsumerProcessor {
 	protected Gson gson;

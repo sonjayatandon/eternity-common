@@ -37,7 +37,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.common.SubSystemNames;
 import com.eternity.common.communication.AsyncThreadPool;
@@ -48,7 +49,7 @@ import com.eternity.common.message.Parameter;
 public abstract class AsyncDispatch extends HttpServlet implements
 		MessageConsumerFactory {
 	private static final long serialVersionUID = 42L;
-	private static Logger log = Logger.getLogger(AsyncDispatch.class);
+	private static Logger log = LogManager.getLogger(AsyncDispatch.class);
 	private String hostName;
 
 	public AsyncDispatch() {

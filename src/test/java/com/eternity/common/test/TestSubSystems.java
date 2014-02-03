@@ -1,13 +1,14 @@
 package com.eternity.common.test;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.eternity.common.SubSystemNames;
 
 public enum TestSubSystems implements SubSystemNames {
 	alpha;
 
-	private static Logger log = Logger.getLogger(TestSubSystems.class);
+	private static Logger log = LogManager.getLogger(TestSubSystems.class);
 
 	public static SubSystemNames getValueOf(String subsystemId) {
 		TestSubSystems retVal = null;
