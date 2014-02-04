@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.eternity.common</groupId>
     <artifactId>eternity-common</artifactId>
-    <version>1.1</version>
+    <version>1.1.2</version>
     <packaging>jar</packaging>
     <build>
         <plugins>
@@ -38,6 +38,14 @@
               </executions>
               <configuration>
                 <attach>true</attach>
+              </configuration>
+            </plugin>
+            <plugin>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <excludes>
+                  <exclude>com/eternity/common/test/TestSubSystems.java</exclude>
+                </excludes>
               </configuration>
             </plugin>
         </plugins>
