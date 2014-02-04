@@ -1,7 +1,7 @@
 package com.eternity.common.test;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 
 public class TestWorkbench implements MessageConsumerFactory {
-	private static Logger log = LogManager.getLogger(TestWorkbench.class);
+	private static Logger log = LoggerFactory.getLogger(TestWorkbench.class);
 	
 	@Test
 	public void testMessageConsumer() {

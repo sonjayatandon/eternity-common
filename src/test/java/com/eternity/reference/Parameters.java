@@ -1,6 +1,6 @@
 package com.eternity.reference;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eternity.common.message.ParameterNames;
 
@@ -8,7 +8,7 @@ import com.eternity.common.message.ParameterNames;
 public enum Parameters implements ParameterNames {
 	first,second,third;
 
-	private static Logger log = LogManager.getLogger(Parameters.class);
+	private static Logger log = LoggerFactory.getLogger(Parameters.class);
 
 	public static Parameters getValueOf(String parameter) {
 		Parameters retVal = null;

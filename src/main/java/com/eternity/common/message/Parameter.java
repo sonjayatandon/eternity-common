@@ -25,15 +25,15 @@ SOFTWARE. *
  */
 
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public enum Parameter implements ParameterNames {
 	subsystemId,
 	jsonMessage,
 	postData;
 
-	private static Logger log = LogManager.getLogger(Parameter.class);
+	private static Logger log = LoggerFactory.getLogger(Parameter.class);
 
 	public static Parameter getValueOf(String parameter) {
 		Parameter retVal = null;

@@ -2,8 +2,8 @@ package com.eternity.reference;
 
 import java.util.Map;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.eternity.common.SubSystemNames;
 import com.eternity.common.message.MessageConsumer;
@@ -16,7 +16,7 @@ import com.eternity.reference.json.GsonFactory;
 
 public class ReferenceMessageConsumer extends MessageConsumer implements RequestFactory {
 
-	private static Logger log = LogManager.getLogger(ReferenceMessageConsumer.class);
+	private static Logger log = LoggerFactory.getLogger(ReferenceMessageConsumer.class);
 
 	public ReferenceMessageConsumer(SubSystemNames subsystem) {
 		super(subsystem);
