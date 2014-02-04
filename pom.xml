@@ -18,6 +18,15 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <excludes>
+                  <exclude>com/eternity/common/test/TestSubSystems.java</exclude>
+                </excludes>
+              </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
