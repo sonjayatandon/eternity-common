@@ -21,7 +21,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE. * 
+SOFTWARE. *
  */
 
 import javax.naming.InitialContext;
@@ -31,34 +31,34 @@ import org.slf4j.LoggerFactory;
 import org.apache.naming.NamingContext;
 
 public enum Environment {
-	production,
-	staging,
-	qa,
-	local;
-	
-	private static Logger log = LoggerFactory.getLogger(Environment.class);
-	private static Environment currentEnvironment = null;
-	
-	public static Environment get() {
-		if (currentEnvironment != null) return currentEnvironment;
-		
-		try {
-			InitialContext initialContext;
-			initialContext = new javax.naming.InitialContext();
-			NamingContext context = (NamingContext)initialContext.lookup("java:comp/env");
-			String env = (String)context.lookup("application_environment");
-			try {
-				currentEnvironment = Environment.valueOf(env);
-			} catch (IllegalArgumentException iae) {
-				log.error("enum not found for Environment [" + env + "]; defaulting to local", iae);
-				currentEnvironment = local;
-			}
-			
-		} catch (Exception e) {
-			log.error("Unable to find application_environment; defaulting to local", e);
-			currentEnvironment = local;
-		} 
-		return currentEnvironment;
-	}
-	 
+        production,
+        staging,
+        qa,
+        local;
+
+        private static Logger log = LoggerFactory.getLogger(Environment.class);
+        private static Environment currentEnvironment = null;
+
+        public static Environment get() {
+                if (currentEnvironment != null) return currentEnvironment;
+
+                try {
+                        InitialContext initialContext;
+                        initialContext = new javax.naming.InitialContext();
+                        NamingContext context = (NamingContext)initialContext.lookup("java:comp/env");
+                        String env = (String)context.lookup("application_environment");
+                        try {
+                                currentEnvironment = Environment.valueOf(env);
+                        } catch (IllegalArgumentException iae) {
+                                log.error("enum not found for Environment [" + env + "]; defaulting to local", iae);
+                                currentEnvironment = local;
+                        }
+
+                } catch (Exception e) {
+                        log.error("Unable to find application_environment; defaulting to local", e);
+                        currentEnvironment = local;
+                }
+                return currentEnvironment;
+        }
+
 }
