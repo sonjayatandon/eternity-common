@@ -120,18 +120,20 @@ public abstract class MessageConsumer {
 
 	public Response processMessage(Message message) {
 		log.debug(message.toString());
-		Response response = new Response();
+		Response response = new Response(gson);
 		Command command = commandRegistry.get(message.commandName);
 
 		if (command == null) {
 			log.error("unknown command [" + message.commandName + "]");
-			response.setAsFailed();
+			response.errors.add("unknown command [" + message.commandName + "]");
+			response.setStatusToBadRequest_400();
 			return response;
 		}
 
 		if(!command.executeAlways() && !ready){//if the server isn't completely started and the command isn't always executed
 			log.error("server has not finished starting, message will not be processed - " + this.subsystem);
-			response.setAsFailed();
+			response.errors.add("server has not finished starting, message will not be processed - " + this.subsystem);
+			response.setStatusToWeMessedUp_500();
 			return response;
 		}
 		//The server has finished starting, or the command is one that's always executed
@@ -139,10 +141,6 @@ public abstract class MessageConsumer {
 		Request request = requestFactory.createRequest(message.paramMap);
 		request.postData = message.postData;
 		command.execute(request, response);
-
-		// TODO check response.status
-		String JSON = gson.toJson(response.responseData);
-		response.setResponseData(ResponseField.JSON, JSON);
 
 		return response;
 	}
@@ -170,8 +168,8 @@ public abstract class MessageConsumer {
 		}
 		// replace the last , with ] so that the JSON is valid
 		responseString.insert(responseString.length() - 1, ']');
-		Response response = new Response();
-		response.setResponseData(ResponseField.JSON, responseString.toString());
+		Response response = new Response(gson);
+		response.setJSONResponse(responseString.toString());
 		return response;
 	}
 }

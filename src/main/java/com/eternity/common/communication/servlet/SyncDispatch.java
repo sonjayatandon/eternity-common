@@ -47,6 +47,7 @@ import com.eternity.common.message.MessageConsumerFactory;
 import com.eternity.common.message.Parameter;
 import com.eternity.common.message.Response;
 
+@Deprecated
 public abstract class SyncDispatch extends HttpServlet implements MessageConsumerFactory {
 	private static final long serialVersionUID = 42L;
 	private static Logger log = LoggerFactory.getLogger(SyncDispatch.class);

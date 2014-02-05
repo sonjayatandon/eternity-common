@@ -92,6 +92,7 @@ public abstract class SyncJSONDispatch extends HttpServlet implements MessageCon
 				} else {
 					consumerResponse = consumer.processMessage(jsonMessage);
 				}
+				response.setStatus(consumerResponse.getStatus());
 				String result = consumerResponse.getJSONResponseData();
 				writer.println(result);
 			} else {
