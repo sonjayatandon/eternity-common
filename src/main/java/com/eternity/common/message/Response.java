@@ -25,38 +25,110 @@ SOFTWARE. *
  */
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+
 public class Response {
-	public static final String OK = "ok";
-	public static final String FAIL = "fail";
-
-	public Map<String, Object> responseData = new HashMap<String, Object>();
-	public String status = OK;
-
+	protected Map<String, Object> responseFields = new HashMap<String, Object>();
+	protected String jsonResponse = null;
+	protected int status = 200;
+	final protected Gson gson;
+	
+	final static String EMPTY_RESPONSE = "";
+	
 	public List<String> errors = new ArrayList<String>();
 
-	protected Response() {
+	protected Response(Gson gson) {
+		this.gson = gson;
 	}
 
-	public void setResponseData(ResponseFieldNames responseField, Object value) {
-		responseData.put(responseField.toString(), value);
+	public void setResponseField(ResponseFieldNames responseField, Object value) {
+		responseFields.put(responseField.toString(), value);
+	}
+	
+	public int getStatus() {
+		return status;
 	}
 
-	public Object getResponseData(ResponseFieldNames responseField) {
-		return responseData.get(responseField.toString());
+	public void setJSONResponse(String jsonResponse) {
+		// sure would be nice if we could verify that this was a well formatted json string
+		// because it it wasn't, we could set status to 500 and throw the response in the error so the poor sap
+		// using this had something to help debug. But, for now, we will make the poor sap's life just a little bit
+		// worse in this case
+		this.jsonResponse = jsonResponse; 
 	}
 
 	public String getJSONResponseData() {
-		return (String) getResponseData(ResponseField.JSON);
+		// first, make sure status is correct
+		if (errors.size() > 0 && status == 200) status = 400;
+		
+		// check to see if we have an error condition
+		if (status != 200) {
+			// we had errors, return a json version of this object;
+			return gson.toJson(this);
+		}
+		
+		// now, we are either going to return responseFields or jsonResponse
+		// check to make sure we don't have values in both.  
+		// if we do, someone dun f'd up
+		if (responseFields.size() > 0 && jsonResponse != null) {
+			status = 500;
+			errors.add("There is return information in responseFields and jsonReponse, and yes, the jsonResponse, in this case is supposed to be escaped out, don't try to fix it.");
+			return gson.toJson(this);
+		}
+		
+		// check to see if we are returning fields
+		if (responseFields.size() > 0) {
+			return gson.toJson(responseFields);
+		}
+		
+		// check to see if we have a jsonResponse
+		if (jsonResponse != null) {
+			return jsonResponse;
+		}
+		
+		// guess there is nothing to return
+		return EMPTY_RESPONSE;
 	}
 
-	public void setAsFailed() {
-		this.status = FAIL;
+	public void setStatus(int status) {
+		// use the helpers over this one
+		// I guess if you want to be a tea pot (418), you can use this one
+		this.status = status;
+	}
+	
+	// These are helpers for the most expected return codes
+	// I don't know about you, but I sure can use a helpful reminder what the codes are
+	public void setStatusToBadRequest_400() {
+		this.status = 400;
+	}
+	
+	public void setStatusToRequiresAuthorizedClient_401() {
+		this.status = 401;
+	}
+	
+	public void setStatusToForbiddenForClient_403() {
+		this.status = 403;
+	}
+	
+	public void setStatusToObjectNotFound_404() {
+		this.status = 404;
+	}
+	
+	public void setStatusToTimedOut_408() {
+		this.status = 408;
+	}
+	
+	public void setStatusToWeMessedUp_500() {
+		this.status = 500;
+	}
+	
+	public void setStatusToTryAgainLater_503() {
+		this.status = 503;
 	}
 
 	public void addErrors(ArrayList<String> errors) {
@@ -66,14 +138,4 @@ public class Response {
 	public void addError(String error) {
 		errors.add(error);
 	}
-
-	public String getXMLResponseData() {
-		return (String) getResponseData(ResponseField.xml);
-	}
-
-	public File getImageResponseData() {
-		Object retVal = getResponseData(ResponseField.image);
-		return (File)retVal;
-	}
-
 }
