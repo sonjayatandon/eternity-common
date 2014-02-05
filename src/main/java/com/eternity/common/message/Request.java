@@ -47,7 +47,7 @@ public class Request {
 	}
 
 	public String getParam(ParameterNames paramName) {
-		String paramValue = params.get(paramName);
+		String paramValue = (params == null)?null:params.get(paramName);
 		if (paramValue == null) {
 			errors.add(paramName + " is a required parameter");
 		}
@@ -55,6 +55,7 @@ public class Request {
 	}
 
 	public String getOptionalParam(ParameterNames paramName) {
+		if (params == null) return null;
 		return params.get(paramName);
 	}
 
