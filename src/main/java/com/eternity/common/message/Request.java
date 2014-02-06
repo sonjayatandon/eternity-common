@@ -40,7 +40,7 @@ public class Request {
 	private Map<ParameterNames, String> params = new HashMap<ParameterNames, String>();
 	protected ArrayList<String> errors = new ArrayList<String>();
 	protected String postData;
-	private Gson gson;
+	final protected Gson gson;
 
 	protected Request(Map<ParameterNames, String> params, Gson gson) {
 		this.params = params;
