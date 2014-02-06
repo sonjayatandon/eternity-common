@@ -4,9 +4,10 @@ import java.util.Map;
 
 import com.eternity.common.message.ParameterNames;
 import com.eternity.common.message.Request;
+import com.google.gson.Gson;
 
 public class ReferenceRequest extends Request {
-	public ReferenceRequest(Map<ParameterNames, String> params) {
-		super(params);
+	public ReferenceRequest(Map<ParameterNames, String> params, Gson gson) {
+		super(params, gson);
 	}
 }

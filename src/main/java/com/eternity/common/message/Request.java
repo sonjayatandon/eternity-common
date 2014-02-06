@@ -33,13 +33,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
 public class Request {
 	private Map<ParameterNames, String> params = new HashMap<ParameterNames, String>();
 	protected ArrayList<String> errors = new ArrayList<String>();
 	protected String postData;
+	final protected Gson gson;
 
-	protected Request(Map<ParameterNames, String> params) {
+	protected Request(Map<ParameterNames, String> params, Gson gson) {
 		this.params = params;
+		this.gson = gson;
 	}
 
 	public boolean isValid() {
@@ -155,6 +160,22 @@ public class Request {
 	
 	public String getPostData() {
 		return postData;
+	}
+
+	public <T> T getPostData(Class<T> klass) {
+		try {
+			T value = gson.fromJson(getPostData(), klass);
+			
+			if (value == null) {
+				this.errors.add("No JSON data passed.");
+			}
+			
+			return value;
+		}
+		catch (JsonSyntaxException e) {
+			this.errors.add("Malformed JSON data passed: " + e.getLocalizedMessage());
+			return null;
+		}
 	}
 	
 	public Map<ParameterNames, String> getCopyOfParamData(){
