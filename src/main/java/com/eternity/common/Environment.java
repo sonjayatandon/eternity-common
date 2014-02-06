@@ -39,7 +39,7 @@ public enum Environment {
         private static Logger log = LoggerFactory.getLogger(Environment.class);
         private static Environment currentEnvironment = null;
 
-        public static Environment get() {
+        public synchronized static Environment get() {
                 if (currentEnvironment != null) return currentEnvironment;
 
                 try {
@@ -55,7 +55,7 @@ public enum Environment {
                         }
 
                 } catch (Exception e) {
-                        log.error("Unable to find application_environment; defaulting to local", e);
+                        log.warn("Unable to find application_environment; defaulting to local", e);
                         currentEnvironment = local;
                 }
                 return currentEnvironment;
