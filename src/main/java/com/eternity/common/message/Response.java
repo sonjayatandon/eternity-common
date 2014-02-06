@@ -61,6 +61,10 @@ public class Response {
 		// worse in this case
 		this.jsonResponse = jsonResponse; 
 	}
+	
+	public <T> void setJSONResponse(T value) {
+		setJSONResponse(gson.toJson(value));
+	}
 
 	public String getJSONResponseData() {
 		// first, make sure status is correct
