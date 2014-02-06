@@ -62,7 +62,7 @@ public class Response {
 		this.jsonResponse = jsonResponse; 
 	}
 	
-	public <T> void setJSONResponse(T value) {
+	public void setJSONResponse(Object value) {
 		setJSONResponse(gson.toJson(value));
 	}
 
