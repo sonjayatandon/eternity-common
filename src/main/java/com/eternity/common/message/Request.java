@@ -173,7 +173,7 @@ public class Request {
 			return value;
 		}
 		catch (JsonSyntaxException e) {
-			this.errors.add("Malformed JSON data passed.");
+			this.errors.add("Malformed JSON data passed: " + e.getLocalizedMessage());
 			return null;
 		}
 	}
