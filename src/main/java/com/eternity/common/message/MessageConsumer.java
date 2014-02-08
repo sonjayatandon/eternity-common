@@ -43,6 +43,12 @@ public abstract class MessageConsumer {
 	// These methods are used to access those instances
 	private static final HashMap<SubSystemNames, MessageConsumer> instances = new HashMap<SubSystemNames, MessageConsumer>();
 	protected static SubSystemNames subsystemNames;
+	
+	// this method should only be used for testing 
+	
+	public static final void resetForTesting(SubSystemNames subsystem) {
+		instances.remove(subsystem);
+	}
 
 	public static final MessageConsumer getInstance(SubSystemNames subsystem, MessageConsumerFactory messageConsumerFactory, String hostName) {
 		MessageConsumer instance = instances.get(subsystem);
