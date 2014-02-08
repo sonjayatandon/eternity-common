@@ -37,6 +37,6 @@ public class ReferenceMessageConsumer extends MessageConsumer implements Request
 
 	@Override
 	public Request createRequest(Map<ParameterNames, String> paramMap) {
-		return new ReferenceRequest(paramMap);
+		return new ReferenceRequest(paramMap, gson);
 	}
 }
