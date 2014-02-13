@@ -31,15 +31,23 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 
 public class Response {
+	@Expose
 	protected Map<String, Object> responseFields = new HashMap<String, Object>();
+	
+	@Expose
 	protected String jsonResponse = null;
+	
+	@Expose
 	protected int status = 200;
+	
 	protected Gson gson;
 	
 	final static String EMPTY_RESPONSE = "";
 	
+	@Expose
 	public List<String> errors = new ArrayList<String>();
 
 	protected Response(Gson gson) {
@@ -67,17 +75,6 @@ public class Response {
 	}
 
 	public String getJSONResponseData() {
-		// first, make sure status is correct
-		Gson gson = this.gson;
-		
-		// TODO this is a bit barfable.  We are doing this because we are converting this
-		// entire object to json and we get into a bit of trouble when gson attempts to
-		// convert the gson object in this.gson.  
-		// This current fix assumes this method will only be caused once
-		// For those of you that I just caused a land mine for and wasted your day chasing this down, oopsie.
-		this.gson = null;  
-		
-		
 		if (errors.size() > 0 && status == 200) status = 400;
 		
 		// check to see if we have an error condition
