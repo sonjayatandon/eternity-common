@@ -31,23 +31,18 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
 
 public class Response {
-	@Expose
 	protected Map<String, Object> responseFields = new HashMap<String, Object>();
 	
-	@Expose
 	protected String jsonResponse = null;
 	
-	@Expose
 	protected int status = 200;
 	
 	protected Gson gson;
 	
 	final static String EMPTY_RESPONSE = "";
 	
-	@Expose
 	public List<String> errors = new ArrayList<String>();
 
 	protected Response(Gson gson) {
@@ -80,7 +75,7 @@ public class Response {
 		// check to see if we have an error condition
 		if (status != 200) {
 			// we had errors, return a json version of this object;
-			return gson.toJson(this);
+			return gson.toJson(new ResponseError(responseFields, jsonResponse, status, errors));
 		}
 		
 		// now, we are either going to return responseFields or jsonResponse
@@ -89,7 +84,7 @@ public class Response {
 		if (responseFields.size() > 0 && jsonResponse != null) {
 			status = 500;
 			errors.add("There is return information in responseFields and jsonReponse, and yes, the jsonResponse, in this case is supposed to be escaped out, don't try to fix it.");
-			return gson.toJson(this);
+			return gson.toJson(new ResponseError(responseFields, jsonResponse, status, errors));
 		}
 		
 		// check to see if we are returning fields
