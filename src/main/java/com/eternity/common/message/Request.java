@@ -39,7 +39,7 @@ import com.google.gson.JsonSyntaxException;
 public class Request {
 	private Map<ParameterNames, String> params = new HashMap<ParameterNames, String>();
 	protected ArrayList<String> errors = new ArrayList<String>();
-	protected String postData;
+	protected String jsonData;
 	final protected Gson gson;
 
 	protected Request(Map<ParameterNames, String> params, Gson gson) {
@@ -159,7 +159,7 @@ public class Request {
 	}
 	
 	public String getPostData() {
-		return postData;
+		return jsonData;
 	}
 
 	public <T> T getPostData(Class<T> klass) {

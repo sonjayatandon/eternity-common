@@ -145,7 +145,7 @@ public abstract class MessageConsumer {
 		//The server has finished starting, or the command is one that's always executed
 
 		Request request = requestFactory.createRequest(message.paramMap);
-		request.postData = message.postData;
+		request.jsonData = message.jsonData;
 		command.execute(request, response);
 
 		return response;
@@ -159,7 +159,7 @@ public abstract class MessageConsumer {
 	// for handling post requests
 	public Response processMessage(String messageJSON, String postData) {
 		Message message = gson.fromJson(messageJSON, Message.class);
-		message.postData = postData;
+		message.jsonData = postData;
 		return processMessage(message);
 	}
 

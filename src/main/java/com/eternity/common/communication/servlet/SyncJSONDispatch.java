@@ -72,11 +72,10 @@ public abstract class SyncJSONDispatch extends HttpServlet implements MessageCon
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Date date = new Date();
 		PrintWriter writer = response.getWriter();
+		
 		try {
 
 			StringBuffer requestURL = request.getRequestURL();
-
-
 
 			String subsystemId = requestURL.toString().replaceFirst(".*/([^/?]+).*", "$1");
 			String jsonMessage = request.getParameter(Parameter.jsonMessage.toString());
@@ -105,7 +104,7 @@ public abstract class SyncJSONDispatch extends HttpServlet implements MessageCon
 			log.debug("SynchDispatch completed in : " + (new Date().getTime() - date.getTime()) + "ms");
 		}
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BufferedReader reader = request.getReader();
 		StringBuilder sb = new StringBuilder();
