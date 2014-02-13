@@ -40,10 +40,10 @@ public class Message {
 	public MessageNames commandName;
 	public Map<ParameterNames, String> paramMap;
 	// if there is a post request, we store the posted data here
-	public String postData;
+	public String jsonData;
 	
 	@Override
 	public String toString() {
-		return "Message [commandName=" + commandName + ", paramMap=" + paramMap + ", postData=" + postData + "]";
+		return "Message [commandName=" + commandName + ", paramMap=" + paramMap + ", jsonData=" + jsonData + "]";
 	}
 }

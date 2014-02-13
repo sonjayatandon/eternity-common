@@ -72,17 +72,14 @@ public abstract class SyncJSONDispatch extends HttpServlet implements MessageCon
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Date date = new Date();
 		PrintWriter writer = response.getWriter();
-		String postData = getPostData(request);
 		
 		try {
 
 			StringBuffer requestURL = request.getRequestURL();
 
-
-
 			String subsystemId = requestURL.toString().replaceFirst(".*/([^/?]+).*", "$1");
 			String jsonMessage = request.getParameter(Parameter.jsonMessage.toString());
-			// String postData = (String) request.getAttribute(POST_DATA);
+			String postData = (String) request.getAttribute(POST_DATA);
 
 			SubSystemNames subsystem = MessageConsumer.getSubSystem(subsystemId);
 
@@ -108,20 +105,6 @@ public abstract class SyncJSONDispatch extends HttpServlet implements MessageCon
 		}
 	}
 	
-	protected String getPostData(HttpServletRequest request)  throws ServletException, IOException {
-		BufferedReader reader = request.getReader();
-		StringBuilder sb = new StringBuilder();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			sb.append(line + "\n");
-		}
-		reader.close();
-		String postData = sb.length() == 0?null:sb.toString();
-		log.debug("post data = [" + postData + "]");
-				
-		return postData;
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BufferedReader reader = request.getReader();
 		StringBuilder sb = new StringBuilder();
